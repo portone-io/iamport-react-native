@@ -1,16 +1,3 @@
-import React, { useState } from 'react';
-import type { StackScreenProps } from '@react-navigation/stack';
-import type {
-  CertificationParams,
-  RootStackParamList,
-} from '../NavigationService';
-import { CARRIERS, CERT_PGS } from '../constants';
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
-import { IMPConst } from 'iamport-react-native';
-import { Platform } from 'react-native';
 import {
   Button,
   ButtonText,
@@ -22,7 +9,20 @@ import {
   Text,
   VStack,
 } from '@gluestack-ui/themed';
+import type { StackScreenProps } from '@react-navigation/stack';
+import { IMPConst } from 'iamport-react-native';
+import { useState } from 'react';
+import { Platform } from 'react-native';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
+import type {
+  CertificationParams,
+  RootStackParamList,
+} from '../NavigationService';
 import Picker from '../Picker';
+import { CARRIERS, CERT_PGS } from '../constants';
 
 type Props = StackScreenProps<RootStackParamList, 'CertificationTest'>;
 

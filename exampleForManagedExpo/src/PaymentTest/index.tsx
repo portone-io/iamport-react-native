@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import type { NavigationProp } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { IMPConst, IMPData } from 'iamport-react-native';
 import {
   Button,
   FormControl,
@@ -8,18 +10,29 @@ import {
   Switch,
   Text,
 } from 'native-base';
+import React, { useState } from 'react';
+import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Picker from '../Picker';
-import { PGS, TIER_CODES } from '../constants';
-import { getMethods, getQuotas } from '../utils';
-import { IMPConst } from 'iamport-react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { PGS, TIER_CODES } from '../samples';
+import type { RootStackParamList } from '../types/navigation';
+import { availableMethodsForPg, availableQuotasForPg } from '../utils';
 
-export default function PaymentTest({ navigation }) {
+const PaymentTestStyleSheet = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#f5f5f5',
+  },
+});
+
+const PaymentTest: React.FC = () => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   const [pg, setPg] = useState('html5_inicis');
-  const [tierCode, setTierCode] = useState(undefined);
+  const [tierCode, setTierCode] = useState<string | undefined>(undefined);
   const [method, setMethod] = useState('card');
-  const [cardQuota, setCardQuota] = useState(0);
+  const [cardQuota, setCardQuota] = useState('0');
   const [merchantUid, setMerchantUid] = useState(`mid_${new Date().getTime()}`);
   const [name, setName] = useState('아임포트 결제데이터분석');
   const [amount, setAmount] = useState('39000');
@@ -30,17 +43,9 @@ export default function PaymentTest({ navigation }) {
   const [bizNum, setBizNum] = useState('');
   const [escrow, setEscrow] = useState(false);
   const [digital, setDigital] = useState(false);
-  const insets = useSafeAreaInsets();
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        backgroundColor: '#f5f5f5',
-        paddingTop: -insets.top,
-      }}
-    >
+    <SafeAreaView style={PaymentTestStyleSheet.container}>
       <ScrollView m={2} backgroundColor={'#fff'}>
         <FormControl p={'5%'} borderRadius={3}>
           <Stack direction={'row'}>
@@ -48,12 +53,12 @@ export default function PaymentTest({ navigation }) {
               PG사
             </FormControl.Label>
             <Picker
-              data={PGS}
+              options={PGS}
               selectedValue={pg}
               onValueChange={(value) => {
                 setPg(value);
-                const methods = getMethods(value);
-                setMethod(methods[0].value);
+                const methods = availableMethodsForPg(value);
+                setMethod(methods[0]?.value || 'card');
               }}
             />
           </Stack>
@@ -62,7 +67,7 @@ export default function PaymentTest({ navigation }) {
               티어 코드
             </FormControl.Label>
             <Picker
-              data={TIER_CODES}
+              options={TIER_CODES}
               selectedValue={tierCode}
               onValueChange={(value) => setTierCode(value)}
             />
@@ -72,7 +77,7 @@ export default function PaymentTest({ navigation }) {
               결제수단
             </FormControl.Label>
             <Picker
-              data={getMethods(pg)}
+              options={availableMethodsForPg(pg)}
               selectedValue={method}
               onValueChange={(value) => setMethod(value)}
             />
@@ -83,9 +88,9 @@ export default function PaymentTest({ navigation }) {
                 할부개월수
               </FormControl.Label>
               <Picker
-                data={getQuotas(pg)}
+                options={availableQuotasForPg(pg)}
                 selectedValue={cardQuota}
-                onValueChange={(value) => setCardQuota(parseInt(value, 10))}
+                onValueChange={(value) => setCardQuota(value)}
               />
             </Stack>
           )}
@@ -211,66 +216,63 @@ export default function PaymentTest({ navigation }) {
           </Stack>
           <Button
             bgColor={'#344e81'}
-            /* @ts-ignore */
             onPress={() => {
-              const data = {
-                params: {
-                  pg,
-                  pay_method: method,
-                  currency: undefined,
-                  notice_url: undefined,
-                  display: undefined,
-                  merchant_uid: merchantUid,
-                  name,
-                  amount,
-                  app_scheme: 'exampleformanagedexpo',
-                  tax_free: undefined,
-                  buyer_name: buyerName,
-                  buyer_tel: buyerTel,
-                  buyer_email: buyerEmail,
-                  buyer_addr: undefined,
-                  buyer_postcode: undefined,
-                  custom_data: undefined,
-                  vbank_due: undefined,
-                  popup: undefined,
-                  digital: undefined,
-                  language: undefined,
-                  biz_num: undefined,
-                  customer_uid: undefined,
-                  naverPopupMode: undefined,
-                  naverUseCfm: undefined,
-                  naverProducts: undefined,
-                  m_redirect_url: IMPConst.M_REDIRECT_URL,
-                  escrow,
-                },
-                tierCode,
+              const params: IMPData.PaymentData = {
+                pg,
+                pay_method: method,
+                currency: undefined,
+                notice_url: undefined,
+                display: undefined,
+                merchant_uid: merchantUid,
+                name,
+                amount,
+                app_scheme: 'exampleformanagedexpo',
+                tax_free: undefined,
+                buyer_name: buyerName,
+                buyer_tel: buyerTel,
+                buyer_email: buyerEmail,
+                buyer_addr: undefined,
+                buyer_postcode: undefined,
+                custom_data: undefined,
+                vbank_due: undefined,
+                popup: undefined,
+                digital: undefined,
+                language: undefined,
+                biz_num: undefined,
+                customer_uid: undefined,
+                naverPopupMode: undefined,
+                naverUseCfm: undefined,
+                naverProducts: undefined,
+                m_redirect_url: IMPConst.M_REDIRECT_URL,
+                escrow,
               };
 
               // 신용카드의 경우, 할부기한 추가
-              if (method === 'card' && cardQuota !== 0) {
-                data.params.display = {
-                  card_quota: cardQuota === 1 ? [] : [cardQuota],
+              if (method === 'card' && cardQuota !== '0') {
+                params.display = {
+                  card_quota:
+                    cardQuota === '1' ? [] : [parseInt(cardQuota, 10)],
                 };
               }
 
               // 가상계좌의 경우, 입금기한 추가
               if (method === 'vbank' && vbankDue) {
-                data.params.vbank_due = vbankDue;
+                params.vbank_due = vbankDue;
               }
 
               // 다날 && 가상계좌의 경우, 사업자 등록번호 10자리 추가
               if (method === 'vbank' && pg === 'danal_tpay') {
-                data.params.biz_num = bizNum;
+                params.biz_num = bizNum;
               }
 
               // 휴대폰 소액결제의 경우, 실물 컨텐츠 여부 추가
               if (method === 'phone') {
-                data.params.digital = digital;
+                params.digital = digital;
               }
 
               // 정기결제의 경우, customer_uid 추가
               if (pg === 'kcp_billing') {
-                data.params.customer_uid = `cuid_${new Date().getTime()}`;
+                params.customer_uid = `cuid_${new Date().getTime()}`;
               }
 
               if (pg === 'naverpay') {
@@ -285,9 +287,9 @@ export default function PaymentTest({ navigation }) {
                 ); // January is 0!
                 const yyyy = oneMonthLater.getFullYear();
 
-                data.params.naverPopupMode = false;
-                data.params.naverUseCfm = `${yyyy}${mm}${dd}`;
-                data.params.naverProducts = [
+                params.naverPopupMode = false;
+                params.naverUseCfm = `${yyyy}${mm}${dd}`;
+                params.naverProducts = [
                   {
                     categoryType: 'BOOK',
                     categoryId: 'GENERAL',
@@ -299,6 +301,10 @@ export default function PaymentTest({ navigation }) {
                 ];
               }
 
+              const data = {
+                params,
+                tierCode,
+              };
               navigation.navigate('Payment', data);
             }}
           >
@@ -310,4 +316,6 @@ export default function PaymentTest({ navigation }) {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
+
+export default PaymentTest;

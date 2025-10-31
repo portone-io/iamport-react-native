@@ -5,6 +5,8 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -17,7 +19,7 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "kr.iamport.exampleformanagedexpo",
+      "bundleIdentifier": "kr.iamport.exampleformanagedexpo.kiwiyou",
       "buildNumber": "1.0.0",
       "supportsTablet": true,
       "infoPlist": {
@@ -69,18 +71,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "intentFilters": [
-        {
-          "action": "VIEW",
-          "category": [
-            "DEFAULT",
-            "BROWSABLE"
-          ],
-          "data": {
-            "scheme": "exampleformanagedexpo"
-          }
-        }
-      ]
+      "edgeToEdgeEnabled": true
     },
     "web": {
       "favicon": "./assets/favicon.png"

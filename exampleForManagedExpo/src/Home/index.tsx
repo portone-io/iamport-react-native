@@ -1,13 +1,18 @@
-import React from 'react';
-import { Button, Icon, Text, View } from 'native-base';
 import { FontAwesome } from '@expo/vector-icons';
+import type { NavigationProp } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { Button, Icon, Text, View } from 'native-base';
+import type React from 'react';
+import type { RootStackParamList } from '../types/navigation';
 
-export default function Home({ navigation }) {
+const Home: React.FC = () => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   return (
     <View flex={1}>
       <View
         flex={1}
-        pos={'relative'}
+        position={'relative'}
         alignItems={'center'}
         bgColor={'#344e81'}
         justifyContent={'center'}
@@ -30,7 +35,7 @@ export default function Home({ navigation }) {
       </View>
       <View
         flex={1}
-        pos={'relative'}
+        position={'relative'}
         bottom={'0%'}
         w={'90%'}
         flexDir={'row'}
@@ -43,8 +48,7 @@ export default function Home({ navigation }) {
             borderRadius={3}
             flex={1}
             shadow={1}
-            /* @ts-ignore */
-            onPress={() => navigation.push('PaymentTest')}
+            onPress={() => navigation.navigate('PaymentTest')}
           >
             <Icon
               as={FontAwesome}
@@ -61,8 +65,7 @@ export default function Home({ navigation }) {
             borderRadius={3}
             flex={1}
             shadow={1}
-            /* @ts-ignore */
-            onPress={() => navigation.push('CertificationTest')}
+            onPress={() => navigation.navigate('CertificationTest')}
           >
             <Icon
               as={FontAwesome}
@@ -77,4 +80,6 @@ export default function Home({ navigation }) {
       </View>
     </View>
   );
-}
+};
+
+export default Home;

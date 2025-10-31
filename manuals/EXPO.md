@@ -6,6 +6,7 @@
 이 문서에서는 eject를 하지 않은 managed 프로젝트와 eject를 한 bare 프로젝트 양 쪽에서 Expo를 설정하는 방법을 설명하고 있습니다.
 
 ## Expo CLI 설치하기
+
 ```
 $ npm install -g expo-cli
 ```
@@ -22,7 +23,7 @@ managed로 개발하는 경우 빌드를 Expo 서버에서 원격으로 진행�
 
 - `name`, `icon`, `version`, 그리고 `slug`는 앱 공통 설정으로 필수입니다.
 - `ios`의 `bundleIdentifier` 및 `buildNumber`는 iOS 앱 배포 및 빌드를 위해 필수입니다.
--  `android`의 `package` 및 `versionCode`는 안드로이드 앱 배포 및 빌드를 위해 필수입니다.
+- `android`의 `package` 및 `versionCode`는 안드로이드 앱 배포 및 빌드를 위해 필수입니다.
 
 ```json
 // app.json
@@ -229,14 +230,16 @@ $ expo eject
 ```
 
 ### 2-3. [아임포트 설치 및 링킹하기](./INSTALL.md)
+
 ```shell
 $ yarn add iamport-react-native
 $ yarn add react-native-webview
 ```
 
 ### 2-4. 설정하기
-  - [IOS 설정하기](./SETTING.md)
-  - [실시간 계좌이체 설정하기](./TRANS.md)
+
+- [IOS 설정하기](./SETTING.md)
+- [실시간 계좌이체 설정하기](./TRANS.md)
 
 ###2-5. 예제
 

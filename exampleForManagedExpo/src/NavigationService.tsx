@@ -1,17 +1,18 @@
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Home from './Home';
+import type React from 'react';
 import Certification from './Certification';
-import CertificationTest from './CertificationTest';
 import CertificationResult from './CertificationResult';
+import CertificationTest from './CertificationTest';
+import Home from './Home';
 import Payment from './Payment';
-import PaymentTest from './PaymentTest';
 import PaymentResult from './PaymentResult';
+import PaymentTest from './PaymentTest';
+import type { RootStackParamList } from './types/navigation';
 
-const RootStack = createStackNavigator();
+const RootStack = createStackNavigator<RootStackParamList>();
 
-export default function IamportNavigation() {
+const IamportNavigation: React.FC = () => {
   return (
     <NavigationContainer>
       <RootStack.Navigator
@@ -99,4 +100,6 @@ export default function IamportNavigation() {
       </RootStack.Navigator>
     </NavigationContainer>
   );
-}
+};
+
+export default IamportNavigation;

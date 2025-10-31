@@ -1,16 +1,13 @@
 node_modules/
-.expo/
-npm-debug.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-*.orig.*
-web-build/
+/.expo
+/dist
+/ios
+/android
 
 # macOS
 .DS_Store
+
+expo-env.d.ts
 
 # yarn
 .yarn/*

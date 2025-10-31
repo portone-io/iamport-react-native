@@ -1,5 +1,4 @@
-import React from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 const logo = require('../../img/iamport-logo.png');
 

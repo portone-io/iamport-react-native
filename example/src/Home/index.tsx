@@ -1,7 +1,3 @@
-import React from 'react';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import type { StackScreenProps } from '@react-navigation/stack';
-import type { RootStackParamList } from '../NavigationService';
 import {
   Button,
   ButtonGroup,
@@ -10,6 +6,9 @@ import {
   View,
   VStack,
 } from '@gluestack-ui/themed';
+import FontAwesome from '@react-native-vector-icons/fontawesome';
+import type { StackScreenProps } from '@react-navigation/stack';
+import type { RootStackParamList } from '../NavigationService';
 
 type Props = StackScreenProps<RootStackParamList, 'Home'>;
 

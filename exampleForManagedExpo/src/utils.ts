@@ -1,39 +1,39 @@
 import {
-  QUOTAS,
   METHODS,
-  METHODS_FOR_KCP,
-  METHODS_FOR_UPLUS,
   METHODS_FOR_INICIS,
+  METHODS_FOR_KCP,
   METHODS_FOR_MOBILIANS,
+  METHODS_FOR_UPLUS,
   METHOD_FOR_CARD,
   METHOD_FOR_PHONE,
-  METHOD_FOR_VBANK,
   METHOD_FOR_TRANS,
-} from './constants';
+  METHOD_FOR_VBANK,
+  QUOTAS,
+} from './samples';
 
-function getQuotas(pg) {
+function availableQuotasForPg(pg: string) {
   switch (pg) {
     case 'html5_inicis':
     case 'kcp': {
       return QUOTAS.concat([
         {
-          value: 2,
+          value: '2',
           label: '2개월',
         },
         {
-          value: 3,
+          value: '3',
           label: '3개월',
         },
         {
-          value: 4,
+          value: '4',
           label: '4개월',
         },
         {
-          value: 5,
+          value: '5',
           label: '5개월',
         },
         {
-          value: 6,
+          value: '6',
           label: '6개월',
         },
       ]);
@@ -43,7 +43,7 @@ function getQuotas(pg) {
   }
 }
 
-function getMethods(pg) {
+function availableMethodsForPg(pg: string) {
   switch (pg) {
     case 'html5_inicis': {
       return METHODS_FOR_INICIS;
@@ -82,8 +82,8 @@ function getMethods(pg) {
   }
 }
 
-function getUserCode(pg, tierCode, type = 'payment') {
-  if (tierCode) {
+function getUserCode(pg: string, tierCode?: string, type: 'payment' | 'certification' = 'payment') {
+  if (tierCode != null) {
     return 'imp91623210';
   }
   if (type === 'certification') {
@@ -113,4 +113,4 @@ function getUserCode(pg, tierCode, type = 'payment') {
   }
 }
 
-export { getQuotas, getMethods, getUserCode };
+export { availableMethodsForPg, availableQuotasForPg, getUserCode };

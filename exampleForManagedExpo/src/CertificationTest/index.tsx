@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import type { NavigationProp } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import {
   Button,
   FormControl,
@@ -8,14 +9,24 @@ import {
   Stack,
   Text,
 } from 'native-base';
+import React, { useState } from 'react';
+import { StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Picker from '../Picker';
-import { CARRIERS, TIER_CODES } from '../constants';
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import { CARRIERS, TIER_CODES } from '../samples';
+import type { RootStackParamList } from '../types/navigation';
 
-export default function CertificationTest({ navigation }) {
+const CertificationTestStyleSheet = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#f5f5f5',
+  },
+});
+
+const CertificationTest: React.FC = () => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   const [merchantUid, setMerchantUid] = useState(`mid_${new Date().getTime()}`);
   const [company, setCompany] = useState('아임포트');
   const [carrier, setCarrier] = useState('SKT');
@@ -24,17 +35,8 @@ export default function CertificationTest({ navigation }) {
   const [minAge, setMinAge] = useState('');
   const [tierCode, setTierCode] = useState('');
 
-  const insets = useSafeAreaInsets();
-
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        backgroundColor: '#f5f5f5',
-        paddingTop: -insets.top,
-      }}
-    >
+    <SafeAreaView style={CertificationTestStyleSheet.container}>
       <ScrollView m={2} backgroundColor={'#fff'}>
         <FormControl p={'5%'} borderRadius={3}>
           <Stack direction={'row'}>
@@ -117,14 +119,13 @@ export default function CertificationTest({ navigation }) {
               티어 코드
             </FormControl.Label>
             <Picker
-              data={TIER_CODES}
+              options={TIER_CODES}
               selectedValue={tierCode}
               onValueChange={(value) => setTierCode(value)}
             />
           </Stack>
           <Button
             bgColor={'#344e81'}
-            /* @ts-ignore */
             onPress={() => {
               const data = {
                 params: {
@@ -148,4 +149,6 @@ export default function CertificationTest({ navigation }) {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
+
+export default CertificationTest;

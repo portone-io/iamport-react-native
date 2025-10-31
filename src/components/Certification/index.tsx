@@ -1,12 +1,12 @@
-import React, { createRef, useState } from 'react';
+import { createRef, useState } from 'react';
 import { View } from 'react-native';
 import { WebView } from 'react-native-webview';
 
-import Loading from '../Loading';
 import ErrorOnParams from '../ErrorOnParams';
+import Loading from '../Loading';
 
-import { IMPData, Validation } from '../../utils/Validation';
 import { IMPConst } from '../../constants';
+import { IMPData, Validation } from '../../utils/Validation';
 
 import viewStyles from '../../styles';
 import IamportUrl from '../../utils/IamportUrl';
@@ -62,11 +62,11 @@ function Certification({ userCode, tierCode, data, loading, callback }: Props) {
             }
           }}
           onMessage={(e) => {
-            let data = e.nativeEvent.data;
-            if (decodeURIComponent(data) !== data) {
-              data = decodeURIComponent(data);
+            let messageData = e.nativeEvent.data;
+            if (decodeURIComponent(messageData) !== messageData) {
+              messageData = decodeURIComponent(messageData);
             }
-            let response = JSON.parse(data);
+            let response = JSON.parse(messageData);
 
             if (typeof callback === 'function') {
               callback(response);

@@ -1,4 +1,6 @@
-const PGS = [
+import type { PickerOption } from "./Picker";
+
+const PGS: PickerOption[] = [
   {
     value: 'html5_inicis',
     label: '웹 표준 이니시스',
@@ -109,7 +111,7 @@ const PGS = [
   },
 ];
 
-const TIER_CODES = [
+const TIER_CODES: PickerOption[] = [
   {
     value: 'ADD',
     label: '아디다스',
@@ -172,7 +174,7 @@ const TIER_CODES = [
   },
 ];
 
-const METHODS = [
+const METHODS: PickerOption[] = [
   {
     value: 'card',
     label: '신용카드',
@@ -191,7 +193,7 @@ const METHODS = [
   },
 ];
 
-const METHODS_FOR_INICIS = METHODS.concat([
+const METHODS_FOR_INICIS: PickerOption[] = METHODS.concat([
   {
     value: 'samsung',
     label: '삼성페이',
@@ -214,7 +216,7 @@ const METHODS_FOR_INICIS = METHODS.concat([
   },
 ]);
 
-const METHODS_FOR_UPLUS = METHODS.concat([
+const METHODS_FOR_UPLUS: PickerOption[] = METHODS.concat([
   {
     value: 'cultureland',
     label: '문화상품권',
@@ -229,14 +231,14 @@ const METHODS_FOR_UPLUS = METHODS.concat([
   },
 ]);
 
-const METHODS_FOR_KCP = METHODS.concat([
+const METHODS_FOR_KCP: PickerOption[] = METHODS.concat([
   {
     value: 'samsung',
     label: '삼성페이',
   },
 ]);
 
-const METHODS_FOR_MOBILIANS = [
+const METHODS_FOR_MOBILIANS: PickerOption[] = [
   {
     value: 'card',
     label: '신용카드',
@@ -247,41 +249,41 @@ const METHODS_FOR_MOBILIANS = [
   },
 ];
 
-const METHOD_FOR_CARD = [
+const METHOD_FOR_CARD: PickerOption[] = [
   {
     value: 'card',
     label: '신용카드',
   },
 ];
 
-const METHOD_FOR_PHONE = [
+const METHOD_FOR_PHONE: PickerOption[] = [
   {
     value: 'phone',
     label: '휴대폰 소액결제',
   },
 ];
 
-const METHOD_FOR_VBANK = [
+const METHOD_FOR_VBANK: PickerOption[] = [
   {
     value: 'vbank',
     label: '가상계좌',
   },
 ];
 
-const METHOD_FOR_TRANS = [
+const METHOD_FOR_TRANS: PickerOption[] = [
   {
     value: 'trans',
     label: '실시간 계좌이체',
   },
 ];
 
-const QUOTAS = [
+const QUOTAS: PickerOption[] = [
   {
-    value: 0,
+    value: '0',
     label: 'PG사 기본 제공',
   },
   {
-    value: 1,
+    value: '1',
     label: '일시불',
   },
 ];
@@ -306,17 +308,9 @@ const CARRIERS = [
 ];
 
 export {
-  PGS,
-  TIER_CODES,
-  METHODS,
-  METHODS_FOR_INICIS,
-  METHODS_FOR_UPLUS,
-  METHODS_FOR_KCP,
-  METHODS_FOR_MOBILIANS,
-  METHOD_FOR_CARD,
-  METHOD_FOR_PHONE,
-  METHOD_FOR_VBANK,
-  METHOD_FOR_TRANS,
-  QUOTAS,
-  CARRIERS,
+  CARRIERS, METHOD_FOR_CARD,
+  METHOD_FOR_PHONE, METHOD_FOR_TRANS, METHOD_FOR_VBANK, METHODS,
+  METHODS_FOR_INICIS, METHODS_FOR_KCP,
+  METHODS_FOR_MOBILIANS, METHODS_FOR_UPLUS, PGS, QUOTAS, TIER_CODES
 };
+

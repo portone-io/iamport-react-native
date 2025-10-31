@@ -1,14 +1,14 @@
-import React, { createRef, useEffect, useRef, useState } from 'react';
 import type { IMPData } from 'iamport-react-native';
+import { createRef, useEffect, useRef, useState } from 'react';
+import { Linking, Platform, View } from 'react-native';
+import WebView from 'react-native-webview';
+import type { WebViewSource } from 'react-native-webview/lib/WebViewTypes';
+import { IMPConst } from '../../constants';
+import viewStyles from '../../styles';
+import IamportUrl from '../../utils/IamportUrl';
 import ValidationForPayment from '../../utils/ValidationForPayment';
 import ErrorOnParams from '../ErrorOnParams';
-import { Linking, Platform, View } from 'react-native';
-import { IMPConst } from '../../constants';
-import IamportUrl from '../../utils/IamportUrl';
-import WebView from 'react-native-webview';
-import viewStyles from '../../styles';
 import Loading from '../Loading';
-import type { WebViewSource } from 'react-native-webview/lib/WebViewTypes';
 
 type Props = {
   userCode: string;

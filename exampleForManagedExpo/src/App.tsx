@@ -1,11 +1,13 @@
-import React from 'react';
 import { NativeBaseProvider } from 'native-base';
-import IamportNavigation from './src/NavigationService';
+import type React from 'react';
+import IamportNavigation from './NavigationService';
 
-export default function App() {
+const App: React.FC = () => {
   return (
     <NativeBaseProvider>
       <IamportNavigation />
     </NativeBaseProvider>
   );
-}
+};
+
+export default App;

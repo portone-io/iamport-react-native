@@ -1,15 +1,21 @@
-import React from 'react';
-import { Icon, IconButton, List, Text } from 'native-base';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome } from '@expo/vector-icons';
+import type { NavigationProp, RouteProp } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { Icon, IconButton, List, Text } from 'native-base';
+import type React from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import type { RootStackParamList } from '../types/navigation';
 
-function getBoolean(value) {
+function getBoolean(value: any) {
   if (typeof value === 'boolean') return value;
   if (typeof value === 'string') return value === 'true';
   return undefined;
 }
 
-export default function PaymentResult({ route, navigation }) {
+const PaymentResult: React.FC = () => {
+  const route = useRoute<RouteProp<RootStackParamList, 'PaymentResult'>>();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   const imp_success = route.params?.imp_success;
   const success = route.params?.success;
   const imp_uid = route.params?.imp_uid;
@@ -72,7 +78,6 @@ export default function PaymentResult({ route, navigation }) {
       </List>
       <IconButton
         icon={<Icon as={FontAwesome} name={'arrow-left'} size={20} />}
-        /* @ts-ignore */
         onPress={() => navigation.navigate('Home')}
       >
         <Text>돌아가기</Text>
@@ -80,3 +85,5 @@ export default function PaymentResult({ route, navigation }) {
     </SafeAreaView>
   );
 }
+
+export default PaymentResult
