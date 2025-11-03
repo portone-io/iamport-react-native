@@ -1,10 +1,8 @@
 {
   "extends": "./tsconfig",
   "exclude": [
-    "quarantine",
     "example",
     "exampleForExpo",
-    "exampleForManagedExpo",
     "exampleForWebView",
     "lib"
   ]

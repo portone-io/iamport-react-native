@@ -1,9 +1,8 @@
 {
   "name": "iamport-react-native",
-  "version": "2.0.15",
+  "version": "3.0.0",
   "description": "리액트 네이티브용 아임포트 결제/본인인증 연동 라이브러리",
   "main": "./lib/module/index.js",
-  "module": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
   "exports": {
     ".": {
@@ -33,27 +32,22 @@
     "!**/.*"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "typescript": "tsc --noEmit",
+    "example-expo": "yarn workspace iamport-react-native-example-for-expo",
+    "test": "jest",
+    "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "del-cli lib",
     "prepare": "bob build",
-    "example": "yarn --cwd example",
-    "example-expo": "yarn --cwd exampleForExpo",
-    "example-managed-expo": "yarn workspace iamport-react-native-example-for-managed-expo",
-    "example-webview": "yarn --cwd exampleForWebView",
-    "bootstrap": "yarn example && yarn example-expo && yarn example-managed-expo && yarn example-webview && yarn && yarn pods-example && yarn pods-example-webview"
+    "release": "release-it --only-version"
   },
   "keywords": [
-    "iamport",
-    "react",
-    "react-native"
-  ],
-  "workspaces": [
-    "exampleForManagedExpo"
+    "react-native",
+    "ios",
+    "android"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/iamport/iamport-react-native"
+    "url": "git+https://github.com/iamport/iamport-react-native.git"
   },
   "author": "Hyukgyu Kwon <me@kwon.hk>",
   "license": "MIT",
@@ -61,27 +55,66 @@
     "url": "https://github.com/iamport/iamport-react-native/issues"
   },
   "homepage": "https://github.com/iamport/iamport-react-native#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "devDependencies": {
     "@eslint/compat": "^1.3.2",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.35.0",
+    "@evilmartians/lefthook": "^1.12.3",
     "@react-native/babel-preset": "0.81.1",
     "@react-native/eslint-config": "^0.81.1",
+    "@release-it/conventional-changelog": "^10.0.1",
+    "@types/jest": "^29.5.14",
     "@types/react": "^19.1.12",
+    "del-cli": "^6.0.0",
     "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
+    "jest": "^29.7.0",
     "prettier": "^3.6.2",
     "react": "19.1.0",
-    "react-native": "0.81.4",
-    "react-native-builder-bob": "^0.40.13",
+    "react-native": "0.81.5",
+    "react-native-builder-bob": "^0.40.14",
     "react-native-webview": "^13.16.0",
+    "release-it": "^19.0.4",
     "typescript": "^5.9.2"
   },
   "peerDependencies": {
     "react": "*",
     "react-native": "*",
-    "react-native-webview": ">=11.x"
+    "react-native-webview": "*"
+  },
+  "workspaces": [
+    "exampleForExpo"
+  ],
+  "packageManager": "yarn@3.6.1",
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/exampleForExpo/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
   },
   "prettier": {
     "quoteProps": "consistent",
@@ -94,8 +127,12 @@
     "source": "src",
     "output": "lib",
     "targets": [
-      "commonjs",
-      "module",
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
       [
         "typescript",
         {
@@ -104,5 +141,9 @@
       ]
     ]
   },
-  "packageManager": "yarn@3.6.1"
+  "create-react-native-library": {
+    "languages": "js",
+    "type": "library",
+    "version": "0.54.8"
+  }
 }
