@@ -27,7 +27,7 @@ npx expo prebuild
     "slug": "your-app-slug",
     "ios": {
       "bundleIdentifier": "com.yourcompany.yourappname",
-      "buildNumber": 1
+      "buildNumber": "1"
     },
     "android": {
       "package": "com.yourcompany.yourappname",

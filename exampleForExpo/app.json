@@ -12,10 +12,11 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "scheme": "exampleforexpo",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "iamportreactnative.example",
-      "buildNumber": 1,
+      "buildNumber": "1",
       "infoPlist": {
         "LSApplicationQueriesSchemes": [
           "kftc-bankpay",
