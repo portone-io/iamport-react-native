@@ -87,6 +87,7 @@
     "react-native-webview": "*"
   },
   "workspaces": [
+    "example",
     "exampleForExpo"
   ],
   "packageManager": "yarn@3.6.1",
