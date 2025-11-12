@@ -1,0 +1,50 @@
+name: Release NPM Module
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: write
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Update npm
+        run: npm install -g npm@latest
+
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: pnpm publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Send a Slack notification if a publish happens
+        if: steps.changesets.outputs.published == 'true'
+        run: |
+          export VERSION=$(jq -r '.[] | select(.name == "iamport-react-native") | .version' <<< '${{ steps.changesets.outputs.publishedPackages }}')
+          curl -X POST -H 'Content-type: application/json'\
+            --data '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"NPM에 `iamport-react-native` 버전 *v'"$VERSION"'* 가 배포되었습니다 :rocket:\ncc @dx-engineers"}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"NPM 페이지 보기"},"value":"show_npm_page","url":"https://www.npmjs.com/package/iamport-react-native/v/'"$VERSION"'","action_id":"show_npm_page"},{"type":"button","text":{"type":"plain_text","text":"체인지로그 보기"},"value":"show_changelog","url":"https://github.com/iamport/iamport-react-native/blob/main/CHANGELOG.md","action_id":"show_changelog"}]}]}'\
+            ${{ secrets.SLACK_WEBHOOK_URL }}
