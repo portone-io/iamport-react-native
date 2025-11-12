@@ -28,7 +28,7 @@ $ cd iamport-react-native/exampleForWebView
 
 필요한 npm 모듈을 설치합니다.
 ```shell
-$ yarn
+$ pnpm i
 ```
 
 `exampleForWebView` 프로젝트의 최상위 `HOME` 컴포넌트에서 웹뷰 source URL을 설정합니다.
@@ -48,7 +48,7 @@ export default Home;
 
 앱을 빌드하고 실행하기 전 Metro를 실행합니다.
 ```shell
-$ yarn start
+$ pnpm start
 ```
 
 각 환경에 맞게 앱을 빌드합니다.

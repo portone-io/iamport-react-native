@@ -12,8 +12,8 @@ $ npm install react-native-webview --save
 또는
 
 ```shell
-$ yarn add iamport-react-native
-$ yarn add react-native-webview
+$ pnpm i iamport-react-native
+$ pnpm i react-native-webview
 ```
 
 `iamport-react-native`는 `v10.8.3` 이상의 `react-native-webview`를 필요로 합니다.

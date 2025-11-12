@@ -9,7 +9,7 @@ Expo 관련 설정은 [Expo 설정하기](../manuals/EXPO.md)에서 보실 수 �
 ## Expo CLI 설치
 
 ```shell
-$ yarn global add expo-cli
+$ pnpm i -g expo-cli
 ```
 
 ## Expo Go 앱에서 실행

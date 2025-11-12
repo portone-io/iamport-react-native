@@ -16,12 +16,12 @@ $ cd iamport-react-native/example
 
 필요한 npm 모듈을 설치합니다.
 ```shell
-$ yarn
+$ pnpm i
 ```
 
 앱을 빌드하고 실행하기 전 Metro를 실행합니다.
 ```shell
-$ yarn start
+$ pnpm start
 ```
 
 각 환경에 맞게 앱을 빌드합니다.

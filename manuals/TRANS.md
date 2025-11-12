@@ -20,6 +20,8 @@ Objective C는 들어오는(incoming) 앱 링크를 트리거 하기 위해 `ope
 
 ### 프로젝트에 openURL 메소드 추가하기
 
+#### Objective-C
+
 `*AppDelegate.m` 파일에 아래 코드를 복사합니다.
 
 ```objectivec
@@ -43,6 +45,23 @@ Objective C는 들어오는(incoming) 앱 링크를 트리거 하기 위해 `ope
 {
   return [RCTLinkingManager application:application openURL:url
                       sourceApplication:sourceApplication annotation:annotation];
+}
+```
+
+#### Swift
+
+`AppDelegate.swift` 파일에 아래 코드를 추가합니다. React 모듈을 import하고 있는지 확인하세요.
+
+```swift
+import React
+
+// Linking API
+func application(
+  _ app: UIApplication,
+  open url: URL,
+  options: [UIApplication.OpenURLOptionsKey: Any] = [:]
+) -> Bool {
+  return RCTLinkingManager.application(app, open: url, options: options)
 }
 ```
 
