@@ -1,7 +1,7 @@
 packages:
   - '.'
-  - example
   - exampleForExpo
+  - exampleForWebView
 
 onlyBuiltDependencies:
   - '@evilmartians/lefthook'
