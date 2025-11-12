@@ -1,6 +1,5 @@
-import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import Home from './Home';
 import Certification from './Certification';
 import Payment from './Payment';
@@ -28,17 +27,17 @@ function App() {
     <NavigationContainer>
       <RootStack.Navigator initialRouteName="Home">
         <RootStack.Screen
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
           name="Home"
           component={Home}
         />
         <RootStack.Screen
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
           name="Certification"
           component={Certification}
         />
         <RootStack.Screen
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
           name="Payment"
           component={Payment}
         />

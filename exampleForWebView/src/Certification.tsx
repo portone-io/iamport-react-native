@@ -1,13 +1,12 @@
-import React from 'react';
-import type {StackScreenProps} from '@react-navigation/stack';
-import type {RootStackParamList} from './App';
+import type { StackScreenProps } from '@react-navigation/stack';
+import type { RootStackParamList } from './App';
 import IMP from 'iamport-react-native';
 import Loading from './Loading';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = StackScreenProps<RootStackParamList, 'Certification'>;
 
-function Certification({navigation, route}: Props) {
+function Certification({ navigation, route }: Props) {
   /* 가맹점 식별코드, 본인인증 데이터 추출 */
   const userCode = route.params?.userCode;
   const data = route.params?.data;
@@ -29,7 +28,7 @@ function Certification({navigation, route}: Props) {
   }
 
   function getIsSuccessed(response: any) {
-    const {success} = response;
+    const { success } = response;
 
     if (typeof success === 'string') {
       return success === 'true';
@@ -37,10 +36,11 @@ function Certification({navigation, route}: Props) {
     if (typeof success === 'boolean') {
       return success === true;
     }
+    return false;
   }
 
   return (
-    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
+    <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
       <IMP.Certification
         userCode={userCode as string}
         loading={<Loading />}

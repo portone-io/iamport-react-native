@@ -1,9 +1,8 @@
-import React from 'react';
-import type {StackScreenProps} from '@react-navigation/stack';
-import type {RootStackParamList} from './App';
+import type { StackScreenProps } from '@react-navigation/stack';
+import type { RootStackParamList } from './App';
 import IMP from 'iamport-react-native';
 import Loading from './Loading';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 function getBoolean(value: string | boolean | undefined) {
   if (typeof value === 'boolean') {
@@ -17,7 +16,7 @@ function getBoolean(value: string | boolean | undefined) {
 
 type Props = StackScreenProps<RootStackParamList, 'Payment'>;
 
-function Payment({navigation, route}: Props) {
+function Payment({ navigation, route }: Props) {
   /* 가맹점 식별코드, 결제 데이터 추출 */
   const userCode = route.params?.userCode;
   const data = route.params?.data;
@@ -39,7 +38,7 @@ function Payment({navigation, route}: Props) {
   }
 
   function getIsSuccessed(response: any) {
-    const {imp_success, success, error_code, code} = response;
+    const { imp_success, success, error_code, code } = response;
     return (
       getBoolean(imp_success) ??
       getBoolean(success) ??
@@ -48,7 +47,7 @@ function Payment({navigation, route}: Props) {
   }
 
   return (
-    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
+    <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
       <IMP.Payment
         userCode={userCode as string}
         loading={<Loading />}

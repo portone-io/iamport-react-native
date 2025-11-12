@@ -1,54 +1,35 @@
 {
   "name": "iamport-react-native-example-for-webview",
+  "description": "아임포트 리액트 네이티브 예제",
   "version": "0.0.1",
-  "private": true,
+  "main": "index.ts",
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "start": "react-native start",
-    "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web"
   },
   "dependencies": {
-    "@react-native-community/masked-view": "^0.1.11",
-    "@react-navigation/native": "^6.1.1",
-    "@react-navigation/stack": "^6.3.10",
-    "query-string": "^8.1.0",
-    "react": "18.2.0",
-    "react-native": "0.72.6",
-    "react-native-gesture-handler": "^2.9.0",
-    "react-native-safe-area-context": "^4.4.1",
-    "react-native-screens": "^3.18.2",
-    "react-native-webview": "^13.6.2"
+    "@expo/metro-runtime": "~6.1.2",
+    "@react-navigation/native": "^7.1.19",
+    "@react-navigation/stack": "^7.6.2",
+    "expo": "~54.0.23",
+    "expo-build-properties": "~1.0.9",
+    "iamport-react-native": "workspace:*",
+    "query-string": "^9.3.1",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-native": "catalog:",
+    "react-native-gesture-handler": "^2.29.1",
+    "react-native-safe-area-context": "^5.6.2",
+    "react-native-web": "~0.21.0",
+    "react-native-webview": "^13.16.0"
   },
+  "private": true,
   "devDependencies": {
-    "@babel/core": "^7.20.5",
-    "@babel/runtime": "^7.20.6",
-    "@react-native-community/eslint-config": "^3.2.0",
-    "@types/jest": "^29.2.4",
-    "@types/react-native": "^0.70.8",
-    "@types/react-test-renderer": "^18.0.0",
-    "babel-jest": "^29.3.1",
-    "babel-plugin-module-resolver": "^4.1.0",
-    "eslint": "^8.30.0",
-    "jest": "^29.3.1",
-    "metro-react-native-babel-preset": "^0.73.6",
-    "react-native-eject": "^0.2.0",
-    "react-test-renderer": "18.2.0",
-    "typescript": "^4.9.4"
-  },
-  "resolutions": {
-    "@types/react": "^18"
-  },
-  "jest": {
-    "preset": "react-native",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "react-native-builder-bob": "^0.40.14",
+    "react-native-monorepo-config": "^0.1.9"
   }
 }

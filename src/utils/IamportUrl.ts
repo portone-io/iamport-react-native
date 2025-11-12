@@ -1,5 +1,4 @@
 import type { IMPData } from 'iamport-react-native';
-import queryString from 'query-string';
 import { Linking, Platform } from 'react-native';
 import { IMPConst } from '../constants';
 
@@ -11,32 +10,36 @@ class IamportUrl {
 
   constructor(url: string) {
     this.url = url;
-    this.scheme = url.split('://', 1)[0];
-    let splittedUrl = [this.scheme, url.slice(this.scheme.length + 3)];
+    const [scheme, location] = splitFirst(url, '://');
+    this.scheme = scheme;
     if (Platform.OS === 'ios') {
       this.path = this.scheme.startsWith('itms')
-        ? `https://${splittedUrl[1]}`
+        ? `https://${location}`
         : this.url;
     } else if (Platform.OS === 'android') {
       if (this.isAppUrl()) {
         if (this.scheme.includes('intent')) {
-          let intentUrl = splittedUrl[1].split('#Intent;');
-          let host = intentUrl[0];
-          let args = intentUrl[1].split(';');
-
+          const [host, argText] = splitFirst(location!!, '#Intent;');
+          const args = argText!!.split(';');
           if (this.scheme !== 'intent') {
-            this.scheme = this.scheme.split(':')[1];
+            this.scheme = this.scheme.split(':')[1]!!;
             this.path = this.scheme + '://' + host;
           }
-          args.forEach((s) => {
-            if (s.startsWith('scheme')) {
-              let scheme = s.split('=')[1];
-              this.path = scheme + '://' + host;
-              this.scheme = scheme;
-            } else if (s.startsWith('package')) {
-              this.package = s.split('=')[1];
+          for (const arg of args) {
+            const [key, rawValue] = splitFirst(arg, '=');
+            const value =
+              rawValue === undefined ? undefined : decodeURIComponent(rawValue);
+            switch (key) {
+              case 'scheme':
+                if (value !== undefined) {
+                  this.path = `${value}://${host}`;
+                  this.scheme = value;
+                }
+                break;
+              case 'package':
+                this.package = value;
             }
-          });
+          }
         } else {
           this.path = this.url;
         }
@@ -50,14 +53,13 @@ class IamportUrl {
     return this.url;
   }
 
-  isPaymentOver(redirectUrl: string, data?: IMPData.PaymentData) {
+  isPaymentOver(redirectUrl: string, data?: IMPData.PaymentData): boolean {
     if (this.url.startsWith(redirectUrl)) {
       return true;
     }
 
     if (data?.pay_method === 'trans') {
-      const decodeUrl = decodeURIComponent(this.url);
-      const parsedUrl = queryString.parse(decodeUrl);
+      const searchParams = new URLSearchParams(extractQuery(this.url));
       const scheme = data?.app_scheme;
       /**
        * [IOS] 웹 표준 이니시스 - 실시간 계좌이체 대비
@@ -72,17 +74,17 @@ class IamportUrl {
        * 이를 위한 isInicisTransPaid 플래그 추가
        */
       if (data.pg.startsWith('html5_inicis') && Platform.OS === 'ios') {
-        const query = parsedUrl;
         if (
-          query.m_redirect_url !== null &&
+          searchParams.has('m_redirect_url') &&
           scheme === data.app_scheme?.toLowerCase()
         ) {
-          if ((query.m_redirect_url as string | null)?.includes(redirectUrl)) {
+          if (searchParams.get('m_redirect_url')?.includes(redirectUrl)) {
             return true;
           }
         }
       }
     }
+    return false;
   }
 
   isAppUrl() {
@@ -333,12 +335,15 @@ class IamportUrl {
   }
 
   getQuery() {
-    return queryString.parse(this.getStringifiedQuery());
+    return Object.fromEntries(
+      new URLSearchParams(this.getStringifiedQuery()).entries()
+    );
   }
 
   getStringifiedQuery() {
-    const decodedUrl = decodeURIComponent(this.url);
-    return queryString.extract(decodedUrl);
+    const query = extractQuery(this.url);
+    if (query === undefined) return undefined;
+    return decodeQueryParam(query);
   }
 
   getInicisTransQuery(redirectUrl: string) {
@@ -366,6 +371,29 @@ class IamportUrl {
       }
     }
   }
+}
+
+function splitFirst(
+  text: string,
+  delimiter: string
+): [string] | [string, string] {
+  const index = text.indexOf(delimiter);
+  if (index === -1) return [text];
+  return [text.slice(0, index), text.slice(index + delimiter.length)];
+}
+
+// PG사 URL은 표준적인 URL이 아닐 수 있다.
+function extractQuery(url: string): string | undefined {
+  const hashIndex = url.indexOf('#');
+  const beforeHash = hashIndex === -1 ? url : url.slice(0, hashIndex);
+  const queryIndex = beforeHash.indexOf('?');
+  if (queryIndex === -1) return undefined;
+  return beforeHash.slice(queryIndex);
+}
+
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURIComponent#decoding_query_parameters_from_a_url
+function decodeQueryParam(query: string): string {
+  return decodeURIComponent(query.replaceAll('+', ' '));
 }
 
 export default IamportUrl;

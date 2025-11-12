@@ -1,5 +1,7 @@
 # 실시간 계좌이체 설정하기
+
 ## iOS - 웹 표준 이니시스 또는 나이스 정보통신
+
 iOS에서 `웹 표준 이니시스(이하 이니시스)` 또는 `나이스 정보통신(이하 나이스)` `실시간 계좌이체`를 연동하는 경우 별도 설정이 요구됩니다.
 이니시스는 결제완료 후 콜백이 실행되지 않고, 나이스는 결제인증 후 결제완료 처리가 되지 않기 때문입니다.
 이는 이니시스와 나이스 결제모듈 자체 문제입니다.
@@ -8,6 +10,7 @@ iOS에서 `웹 표준 이니시스(이하 이니시스)` 또는 `나이스 정�
 Expo 프로젝트의 경우 아래의 Linking 작업들을 하지 않으셔도 됩니다.
 
 ### 실시간 계좌이체 결제처리 원리
+
 먼저 뱅크페이 앱에서 귀하의 앱으로 복귀할때를 트리거해야 합니다.
 아임포트 RN 모듈은 트리거 된 순간 이니시스의 경우 콜백을 실행시키고, 나이스의 경우 나이스로 결제정보가 담긴 POST 요청을 보냅니다.
 Objective C는 들어오는(incoming) 앱 링크를 트리거 하기 위해 `openURL` 메소드를 제공합니다.
@@ -16,6 +19,9 @@ Objective C는 들어오는(incoming) 앱 링크를 트리거 하기 위해 `ope
 자세한 내용은 [RN Linking](https://reactnative.dev/docs/linking)을 참고하세요.
 
 ### 프로젝트에 openURL 메소드 추가하기
+
+#### Objective-C
+
 `*AppDelegate.m` 파일에 아래 코드를 복사합니다.
 
 ```objectivec
@@ -42,15 +48,35 @@ Objective C는 들어오는(incoming) 앱 링크를 트리거 하기 위해 `ope
 }
 ```
 
+#### Swift
+
+`AppDelegate.swift` 파일에 아래 코드를 추가합니다. React 모듈을 import하고 있는지 확인하세요.
+
+```swift
+import React
+
+// Linking API
+func application(
+  _ app: UIApplication,
+  open url: URL,
+  options: [UIApplication.OpenURLOptionsKey: Any] = [:]
+) -> Bool {
+  return RCTLinkingManager.application(app, open: url, options: options)
+}
+```
+
 ## Android - 나이스 정보통신
+
 안드로이드에서는 `나이스` `실시간 계좌이체`를 연동하는 경우 iOS와 같은 이유로 별도 설정이 요구됩니다.
 
 ### 실시간 계좌이체 결제처리 원리
+
 iOS와 동일하게 뱅크페이 앱에서 귀하의 앱으로 복귀할때를 트리거해야 합니다.
 아임포트 RN 모듈은 트리거 된 순간 나이스로 결제정보가 담긴 POST 요청을 보냅니다.
 안드로이드에서는 들어오는(incoming) 앱 링크를 트리거하기 위해 deep linking 기능을 제공합니다.
 
 ### Intent Filter 추가하고 launchMode 설정하기
+
 deep linking 기능을 활성화하기 위해 `Intent Filter`를 추가하고 `MainActivity`의 `launchMode`를 아래와 같이 `singleTask`로 설정해야 합니다.
 
 자세한 내용은 [RN Linking](https://reactnative.dev/docs/linking)을 참고하세요.

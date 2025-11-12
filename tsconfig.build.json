@@ -3,7 +3,7 @@
   "exclude": [
     "example",
     "exampleForExpo",
-    "exampleForManagedExpo",
-    "exampleForWebView"
+    "exampleForWebView",
+    "lib"
   ]
 }
