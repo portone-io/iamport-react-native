@@ -13,17 +13,17 @@ $ pnpm i
 
 그 후 각 예제 프로젝트의 폴더로 이동해 예제별 설명을 따라 앱을 빌드 및 실행할 수 있습니다.
 
-## 1. [exampleForWebView](../exampleForWebView/README.md)
+## 1. [example](../example/README.md)
+
+Expo 프로젝트 입니다.
+Expo prebuild 로 매번 android 및 ios 폴더를 자동 생성 후 직접 앱을 빌드하는 경우를 가정합니다.
+자바스크립트로 작성되었습니다.
+
+## 2. [exampleForWebView](../exampleForWebView/README.md)
 
 기존에 만들어진 웹 페이지를 웹뷰에 띄워 결제를 진행하는 예제입니다.
 [iamport-react-example](https://github.com/iamport/iamport-react-example)과 함께 동작할 수 있도록 제작되었습니다.
 타입스크립트로 작성되었습니다.
-
-## 2. [exampleForExpo](../exampleForExpo/README.md)
-
-Expo bare 프로젝트 입니다.
-Expo에서 eject를 실행해 android 및 ios 폴더를 생성 후 직접 앱을 빌드하는 경우를 가정합니다.
-자바스크립트로 작성되었습니다.
 
 ## 일반/정기결제 코드 예시
 

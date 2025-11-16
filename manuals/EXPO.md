@@ -187,4 +187,4 @@ npx expo install expo-build-properties
 ### 예제
 
 - [예제 코드 작성하기](./EXAMPLE.md)
-- [예제 프로젝트 실행하기](../exampleForExpo/README.md)
+- [예제 프로젝트 실행하기](../example/README.md)

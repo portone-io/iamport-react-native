@@ -1,4 +1,4 @@
-# exampleForExpo 프로젝트
+# example 프로젝트
 
 `iamport-react-native` 예제입니다.
 
@@ -19,7 +19,7 @@ $ pnpm i -g expo-cli
 `iamport-react-native` 레포를 clone받은 후 프로젝트의 `example` 폴더 안으로 이동합니다.
 ```shell
 $ git clone https://github.com/iamport/iamport-react-native
-$ cd iamport-react-native/exampleForExpo
+$ cd iamport-react-native/example
 ```
 
 Expo 개발 서버를 실행합니다.
@@ -27,6 +27,4 @@ Expo 개발 서버를 실행합니다.
 $ expo start
 ```
 
-서버의 로딩이 완료되면 안드로이드의 경우 Expo Go 앱에서, iOS의 경우 카메라를 통해 QR 코드를 찍어 앱을 실행합니다.
-
-Expo Go 앱의 특성상 일부 결제수단(e.g. 뱅크페이)은 직접 빌드하는 것이 아니면 사용이 불가합니다.
+Expo Go 앱의 특성상 일부 결제수단(e.g. 뱅크페이)은 직접 빌드하는 것이 아니면 사용이 불가합니다. 정확한 테스트를 위해 [development build](https://docs.expo.dev/develop/development-builds/introduction/) 를 사용하세요.

@@ -1,5 +1,5 @@
 {
-  "name": "example",
+  "name": "iamport-react-native-example",
   "description": "아임포트 리액트 네이티브 예제",
   "version": "0.0.1",
   "main": "index.ts",

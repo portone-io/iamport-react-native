@@ -1,7 +1,6 @@
 packages:
   - .
   - example
-  - exampleForExpo
   - exampleForWebView
 
 catalog:
