@@ -1,4 +1,4 @@
-import { NavigationContainer } from '@react-navigation/native';
+import { createStaticNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from './Home';
 import Certification from './Certification';
@@ -20,30 +20,35 @@ export type RootStackParamList = {
   Payment: MessageParams | undefined;
 };
 
-const RootStack = createStackNavigator<RootStackParamList>();
+const RootStack = createStackNavigator<RootStackParamList>({
+  id: undefined,
+  initialRouteName: 'Home',
+  screens: {
+    Home: {
+      options: {
+        headerShown: false,
+      },
+      screen: Home,
+    },
+    Certification: {
+      options: {
+        headerShown: false,
+      },
+      screen: Certification,
+    },
+    Payment: {
+      options: {
+        headerShown: false,
+      },
+      screen: Payment,
+    },
+  },
+});
+
+const Navigation = createStaticNavigation(RootStack);
 
 function App() {
-  return (
-    <NavigationContainer>
-      <RootStack.Navigator initialRouteName="Home">
-        <RootStack.Screen
-          options={{ headerShown: false }}
-          name="Home"
-          component={Home}
-        />
-        <RootStack.Screen
-          options={{ headerShown: false }}
-          name="Certification"
-          component={Certification}
-        />
-        <RootStack.Screen
-          options={{ headerShown: false }}
-          name="Payment"
-          component={Payment}
-        />
-      </RootStack.Navigator>
-    </NavigationContainer>
-  );
+  return <Navigation />;
 }
 
 export default App;
