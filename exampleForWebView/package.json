@@ -30,6 +30,7 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "react-native-builder-bob": "^0.40.14",
-    "react-native-monorepo-config": "^0.1.9"
+    "react-native-monorepo-config": "^0.1.9",
+    "typescript": "catalog:"
   }
 }

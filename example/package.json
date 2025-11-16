@@ -1,5 +1,5 @@
 {
-  "name": "iamport-react-native-example-for-expo",
+  "name": "example",
   "description": "아임포트 리액트 네이티브 예제",
   "version": "0.0.1",
   "main": "index.ts",
@@ -21,6 +21,7 @@
     "@react-navigation/stack": "^7.6.3",
     "expo": "~54.0.23",
     "expo-build-properties": "~1.0.9",
+    "expo-dev-client": "~6.0.17",
     "expo-status-bar": "~3.0.8",
     "iamport-react-native": "workspace:*",
     "react": "catalog:",

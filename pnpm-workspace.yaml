@@ -1,12 +1,8 @@
 packages:
-  - '.'
+  - .
+  - example
   - exampleForExpo
   - exampleForWebView
-
-onlyBuiltDependencies:
-  - '@evilmartians/lefthook'
-
-linkWorkspacePackages: true
 
 catalog:
   '@types/react': ^19.1.12
@@ -14,3 +10,4 @@ catalog:
   react: 19.1.0
   react-dom: 19.1.0
   react-native: 0.81.5
+  typescript: ^5.9.3

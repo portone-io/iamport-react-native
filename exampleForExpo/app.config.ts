@@ -14,6 +14,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     resizeMode: 'contain',
     backgroundColor: '#ffffff',
   },
+  experiments: {
+    reactCompiler: true,
+    typedRoutes: true,
+  },
   scheme: 'exampleforexpo',
   ios: {
     supportsTablet: true,

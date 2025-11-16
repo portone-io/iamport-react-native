@@ -2,7 +2,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { IamportNavigation } from './NavigationService';
 import { GluestackUIProvider } from '@gluestack-ui/themed';
 import { config } from '@gluestack-ui/config';
-import { Text } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 
 enableScreens(true);

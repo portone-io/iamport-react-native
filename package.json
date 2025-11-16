@@ -62,9 +62,8 @@
     "@eslint/compat": "^1.3.2",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.35.0",
-    "@evilmartians/lefthook": "^1.12.3",
-    "@react-native/babel-preset": "0.81.1",
-    "@react-native/eslint-config": "^0.81.1",
+    "@react-native/babel-preset": "0.81.5",
+    "@react-native/eslint-config": "0.81.5",
     "@release-it/conventional-changelog": "^10.0.1",
     "@types/jest": "^29.5.14",
     "@types/react": "catalog:",
@@ -79,7 +78,7 @@
     "react-native-builder-bob": "^0.40.14",
     "react-native-webview": "^13.16.0",
     "release-it": "^19.0.4",
-    "typescript": "^5.9.2"
+    "typescript": "catalog:"
   },
   "peerDependencies": {
     "react": "*",
@@ -90,6 +89,7 @@
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
       "<rootDir>/exampleForExpo/node_modules",
       "<rootDir>/exampleForWebView/node_modules",
       "<rootDir>/lib/"

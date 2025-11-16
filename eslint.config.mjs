@@ -27,6 +27,7 @@ export default defineConfig([
     ignores: [
       'node_modules/',
       'lib/',
+      'example/',
       'exampleForWebView/',
       'exampleForExpo/',
       'eslint.config.mjs',
