@@ -1,8 +1,6 @@
 {
   "extends": "./tsconfig",
   "exclude": [
-    "example",
-    "exampleForWebView",
     "lib"
   ]
 }
