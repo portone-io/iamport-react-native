@@ -1,4 +1,6 @@
-import type { StackScreenProps } from '@react-navigation/stack';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
+import type { RouteProp } from '@react-navigation/native';
 import type { RootStackParamList } from './App';
 import IMP from 'iamport-react-native';
 import Loading from './Loading';
@@ -14,9 +16,12 @@ function getBoolean(value: string | boolean | undefined) {
   return undefined;
 }
 
-type Props = StackScreenProps<RootStackParamList, 'Payment'>;
+type NavigationProp = StackNavigationProp<RootStackParamList, 'Payment'>;
+type RouteProps = RouteProp<RootStackParamList, 'Payment'>;
 
-function Payment({ navigation, route }: Props) {
+function Payment() {
+  const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProps>();
   /* 가맹점 식별코드, 결제 데이터 추출 */
   const userCode = route.params?.userCode;
   const data = route.params?.data;

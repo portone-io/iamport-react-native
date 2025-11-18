@@ -1,5 +1,5 @@
 {
-  "name": "iamport-react-native-example-for-webview",
+  "name": "iamport-react-native-example",
   "description": "아임포트 리액트 네이티브 예제",
   "version": "0.0.1",
   "main": "index.ts",
@@ -12,25 +12,35 @@
   },
   "dependencies": {
     "@expo/metro-runtime": "~6.1.2",
+    "@gluestack-style/react": "^1.0.57",
+    "@gluestack-ui/config": "^1.1.20",
+    "@gluestack-ui/themed": "^1.1.73",
+    "@react-native-vector-icons/fontawesome": "^12.4.0",
+    "@react-navigation/elements": "^2.8.1",
     "@react-navigation/native": "^7.1.19",
-    "@react-navigation/stack": "^7.6.2",
+    "@react-navigation/native-stack": "^7.6.2",
+    "@react-navigation/stack": "^7.6.3",
     "expo": "~54.0.23",
     "expo-build-properties": "~1.0.9",
+    "expo-dev-client": "~6.0.17",
+    "expo-status-bar": "~3.0.8",
     "iamport-react-native": "workspace:*",
-    "query-string": "^9.3.1",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-native": "catalog:",
     "react-native-gesture-handler": "^2.29.1",
     "react-native-safe-area-context": "^5.6.2",
+    "react-native-screens": "^4.18.0",
+    "react-native-svg": "^15.14.0",
     "react-native-web": "~0.21.0",
-    "react-native-webview": "^13.16.0"
+    "react-native-webview": "^13.16.0",
+    "use-sync-external-store": "^1.6.0"
   },
   "private": true,
   "devDependencies": {
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "react-native-builder-bob": "^0.40.14",
+    "babel-preset-expo": "^54.0.7",
     "react-native-monorepo-config": "^0.1.9",
     "typescript": "catalog:"
   }

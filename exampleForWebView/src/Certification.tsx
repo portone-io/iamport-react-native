@@ -1,12 +1,17 @@
-import type { StackScreenProps } from '@react-navigation/stack';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
+import type { RouteProp } from '@react-navigation/native';
 import type { RootStackParamList } from './App';
 import IMP from 'iamport-react-native';
 import Loading from './Loading';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-type Props = StackScreenProps<RootStackParamList, 'Certification'>;
+type NavigationProp = StackNavigationProp<RootStackParamList, 'Certification'>;
+type RouteProps = RouteProp<RootStackParamList, 'Certification'>;
 
-function Certification({ navigation, route }: Props) {
+function Certification() {
+  const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProps>();
   /* 가맹점 식별코드, 본인인증 데이터 추출 */
   const userCode = route.params?.userCode;
   const data = route.params?.data;

@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react';
-import type { StackScreenProps } from '@react-navigation/stack';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
+import type { RouteProp } from '@react-navigation/native';
 import type { RootStackParamList } from './App';
 import queryString from 'query-string';
 import WebView from 'react-native-webview';
 
-type Props = StackScreenProps<RootStackParamList, 'Home'>;
+type NavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+type RouteProps = RouteProp<RootStackParamList, 'Home'>;
 
-function Home({ navigation, route }: Props) {
+function Home() {
+  const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProps>();
   const domain = 'http://10.160.43.111:3000';
   const [uri, setUri] = useState(domain);
 
