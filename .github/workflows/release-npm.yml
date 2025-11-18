@@ -37,7 +37,7 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: pnpm publish
+          publish: pnpm publish --filter=iamport-react-native
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
