@@ -10,7 +10,6 @@ function App() {
   return (
     <GluestackUIProvider config={config}>
       <SafeAreaProvider>
-        {/* <Text>Hello WorldHello WorldHello WorldHello WorldHello WorldHello WorldHello WorldHello WorldHello WorldHello WorldHello WorldHello WorldHello WorldHello WorldHello WorldHello WorldHello WorldHello World</Text> */}
         <IamportNavigation />
       </SafeAreaProvider>
     </GluestackUIProvider>
