@@ -1,6 +1,6 @@
 import type { IMPData } from 'iamport-react-native';
 import { createRef, useEffect, useRef, useState } from 'react';
-import { Linking, Platform, View } from 'react-native';
+import { Alert, Linking, Platform, View } from 'react-native';
 import WebView from 'react-native-webview';
 import type { WebViewSource } from 'react-native-webview/lib/WebViewTypes';
 import { IMPConst } from '../../constants';
@@ -129,6 +129,30 @@ function Payment({ userCode, tierCode, data, loading, callback }: Props) {
           ref={webview}
           source={webviewSource}
           mixedContentMode={'always'}
+          onError={(event) => {
+            console.warn(
+              'Encountered an error loading page',
+              event.nativeEvent
+            );
+            // 탐색이 실패하면 react-native-webview는 바로 오류 화면을 표시하려 한다
+            // 한편 별도 설정 안 한 WKWebView는 오류를 무시하여 결제를 계속 진행할 수 있는 경우가 있다
+            // 오류 화면 표시를 막는다
+            event.preventDefault();
+            // Domain=NSURLErrorDomain Code=-1005 Description="The network connection was lost."
+            // 지속적으로 폴링하는 카드사(현대카드)의 경우 카드사 앱에서 돌아올 때 HTTP 요청이 강제 중단되어 -1005 오류 발생
+            // 별도 설정 안 한 WKWebView에서 간헐적으로 자동 리다이렉트가 안 되고 버튼을 누르라고 하는 경우 이 경우이다
+            // 무시한다
+            if (
+              Platform.OS === 'ios' ||
+              (Platform.OS === 'macos' && event.nativeEvent.code === -1005)
+            ) {
+              return;
+            }
+            // 이외의 경우에는 어떻게 처리해야 할지 확실하지 않지만 우선 알림을 보여 주도록 구현
+            Alert.alert(
+              `탐색 오류가 발생했습니다\n도메인: ${event.nativeEvent.domain}\n오류 코드: ${event.nativeEvent.code}\n설명: ${event.nativeEvent.description}`
+            );
+          }}
           onLoadEnd={() => {
             if (!isWebViewLoaded) {
               if (data.pg.startsWith('eximbay')) {
