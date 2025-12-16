@@ -22,6 +22,7 @@ function Payment({ userCode, tierCode, data, loading, callback }: Props) {
   const [webviewSource, setWebviewSource] = useState<WebViewSource>({
     html: IMPConst.WEBVIEW_SOURCE_HTML,
   });
+  const injectedJavaScript = Platform.OS === 'ios' ? IMPConst.WEBVIEW_IOS_HYUNDAICARD_INJECTED_JAVASCRIPT : '';
   const [isWebViewLoaded, setIsWebViewLoaded] = useState(false);
   const [showLoading, setShowLoading] = useState(true);
   const webview = createRef<WebView>();
@@ -129,6 +130,7 @@ function Payment({ userCode, tierCode, data, loading, callback }: Props) {
           ref={webview}
           source={webviewSource}
           mixedContentMode={'always'}
+          injectedJavaScript={injectedJavaScript}
           onError={(event) => {
             console.warn(
               'Encountered an error loading page',

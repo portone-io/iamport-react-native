@@ -95,6 +95,43 @@ namespace IMPConst {
   <body></body>
 </html>
 `;
+  // 현대카드 결제 시 자동 폴링되는 요청이 iOS WKWebView에서 오류를 발생시켜 결제가 중단되는 현상이 있어, 자동 폴링을 중단하는 코드를 추가합니다.
+  export const WEBVIEW_IOS_HYUNDAICARD_INJECTED_JAVASCRIPT = `
+    (function() {
+      if (!window.location.href.startsWith("https://ansimclick.hyundaicard.com/mobile3/MBITFX500.jsp;")) {
+          return;
+      }
+
+      if (typeof window.doSignCheck !== 'function') {
+          console.log("[Injected] Target 'doSignCheck' not found.");
+          return;
+      }
+
+      var originalDoSignCheck = window.doSignCheck;
+
+      window.doSignCheck = function() {
+          var signFlag = null;
+          try {
+              signFlag = document.Reg_Form.signFlag.value;
+          } catch (e) {
+              console.warn("[Injected] Read error, fallback to original:", e);
+              originalDoSignCheck.apply(this, arguments);
+              return;
+          }
+
+          // If Verified ('Y'), STOP. Prevent auto-submit.
+          if (signFlag === "Y") {
+              console.log("[Injected] Verified! Stopping loop. Waiting for user click.");
+              return;
+          }
+
+          // Otherwise, keep polling
+          originalDoSignCheck.apply(this, arguments);
+      };
+
+      console.log("[Injected] Smart polling active.");
+    })();
+    `;
 
   export const ANDROID_APPSCHEME = {
     ISP: 'ispmobile',
