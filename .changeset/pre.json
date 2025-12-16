@@ -8,6 +8,7 @@
     "iamport-react-native": "3.0.0"
   },
   "changesets": [
-    "slimy-zoos-arrive"
+    "slimy-zoos-arrive",
+    "twelve-bushes-cheer"
   ]
 }
