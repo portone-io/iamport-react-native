@@ -95,7 +95,10 @@ namespace IMPConst {
   <body></body>
 </html>
 `;
-  // 지속적으로 폴링하는 카드사(현대카드)의 경우 카드사 앱에서 돌아올 때 HTTP 요청이 강제 중단되어 -1005 오류 발생, 자동 폴링을 중단하는 코드를 추가합니다.
+  // 현대카드가 카드사 앱에서 돌아올 때 자동으로 다음 화면으로 이동하려다가
+  // HTTP 연결이 유실되고 provisional navigation -1005 실패로 기록되나
+  // 무슨 이유에서인지 현대카드에 실제 요청은 가서 이후 수동으로 요청시 세션 만료 오류 발생 (멱등하지 못함)
+  // 자동 이동을 꺼서, 사용자가 버튼을 눌러야 다음 화면으로 이동하도록 함
   export const WEBVIEW_IOS_HYUNDAICARD_INJECTED_JAVASCRIPT = `
     (function() {
       if (!window.location.href.startsWith("https://ansimclick.hyundaicard.com/mobile3/MBITFX500.jsp;")) {
