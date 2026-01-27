@@ -1,6 +1,6 @@
 {
   "name": "iamport-react-native",
-  "version": "3.0.1-alpha.1",
+  "version": "3.0.1",
   "description": "리액트 네이티브용 아임포트 결제/본인인증 연동 라이브러리",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
