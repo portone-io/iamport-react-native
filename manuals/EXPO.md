@@ -4,8 +4,11 @@
 
 ## 1. CNG 프로젝트
 
-CNG(Continuous Native Generation)는 Expo에서 네이티브 프로젝트를 쉽게 관리하기 위해 도입한 개념으로, 한번 생성된 플랫폼별 네이티브 코드를 계속 유지하는 대신, 필요할 때 마다 prebuild로 네이티브 코드를 생성하는 방식입니다.
-`ios`및 `android` 폴더가 매번 자동으로 생성되기 때문에 필요한 설정들은 `app.json`에 적어주셔야 합니다.
+CNG(Continuous Native Generation)는 Expo에서 네이티브 프로젝트를 쉽게 관리하기
+위해 도입한 개념으로, 한번 생성된 플랫폼별 네이티브 코드를 계속 유지하는 대신,
+필요할 때 마다 prebuild로 네이티브 코드를 생성하는 방식입니다. `ios`및 `android`
+폴더가 매번 자동으로 생성되기 때문에 필요한 설정들은 `app.json`에 적어주셔야
+합니다.
 
 ### 1-1. Expo 빌드를 위한 설정
 
@@ -14,8 +17,10 @@ npx expo prebuild
 ```
 
 - `name`, `icon`, `version`, 그리고 `slug`는 앱 공통 설정으로 필수입니다.
-- `ios`의 `bundleIdentifier` 및 `buildNumber`는 iOS 앱 배포 및 빌드를 위해 필수입니다.
-- `android`의 `package` 및 `versionCode`는 안드로이드 앱 배포 및 빌드를 위해 필수입니다.
+- `ios`의 `bundleIdentifier` 및 `buildNumber`는 iOS 앱 배포 및 빌드를 위해
+  필수입니다.
+- `android`의 `package` 및 `versionCode`는 안드로이드 앱 배포 및 빌드를 위해
+  필수입니다.
 
 ```json
 // app.json
@@ -39,7 +44,9 @@ npx expo prebuild
 
 ### 1-2. 외부 앱 실행을 위한 설정
 
-일반 리액트 네이티브 프로젝트의 경우 AndroidManifest.xml 및 Info.plist에 앱 scheme [관련 설정](./SETTING.md)을 작성하지만, expo 프로젝트의 경우 네이티브 코드가 자동 생성되므로 app.json에 대신 설정을 적어주셔야 합니다.
+일반 리액트 네이티브 프로젝트의 경우 AndroidManifest.xml 및 Info.plist에 앱
+scheme [관련 설정](./SETTING.md)을 작성하지만, expo 프로젝트의 경우 네이티브
+코드가 자동 생성되므로 app.json에 대신 설정을 적어주셔야 합니다.
 
 먼저 안드로이드를 위한 외부 앱 설정에 필요한 expo-build-properties를 설치합니다.
 
@@ -50,7 +57,8 @@ npx expo install expo-build-properties
 - `ios.infoPlist.LSApplicationQueriesSchemes`에는 외부 앱 리스트를 작성합니다.
 - `ios.infoPlist.NSAppTransportSecurity`의 두 항목을 `YES`로 설정합니다.
 - `android.intentFilters`에 개발하시는 앱의 scheme을 설정합니다.
-- `plugins`에 expo-build-properties를 이용해 안드로이드 외부 앱 리스트를 추가로 작성합니다.
+- `plugins`에 expo-build-properties를 이용해 안드로이드 외부 앱 리스트를 추가로
+  작성합니다.
 
 ```json
 // app.json
@@ -100,7 +108,8 @@ npx expo install expo-build-properties
           "supertoss",
           "newsmartpib",
           "ukbanksmartbanknonloginpay",
-          "kakaobank"
+          "kakaobank",
+          "naversearchthirdlogin"
         ],
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true,

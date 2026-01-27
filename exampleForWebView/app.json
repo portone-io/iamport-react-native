@@ -62,7 +62,8 @@
           "supertoss",
           "newsmartpib",
           "ukbanksmartbanknonloginpay",
-          "kakaobank"
+          "kakaobank",
+          "naversearchthirdlogin"
         ],
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true,
