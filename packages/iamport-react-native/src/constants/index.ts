@@ -95,6 +95,46 @@ namespace IMPConst {
   <body></body>
 </html>
 `;
+  // 현대카드가 카드사 앱에서 돌아올 때 자동으로 다음 화면으로 이동하려다가
+  // HTTP 연결이 유실되고 provisional navigation -1005 실패로 기록되나
+  // 무슨 이유에서인지 현대카드에 실제 요청은 가서 이후 수동으로 요청시 세션 만료 오류 발생 (멱등하지 못함)
+  // 자동 이동을 꺼서, 사용자가 버튼을 눌러야 다음 화면으로 이동하도록 함
+  export const WEBVIEW_IOS_HYUNDAICARD_INJECTED_JAVASCRIPT = `
+    (function() {
+      if (!window.location.href.startsWith("https://ansimclick.hyundaicard.com/mobile3/MBITFX500.jsp;")) {
+          return;
+      }
+
+      if (typeof window.doSignCheck !== 'function') {
+          console.log("[Injected] Target 'doSignCheck' not found.");
+          return;
+      }
+
+      var originalDoSignCheck = window.doSignCheck;
+
+      window.doSignCheck = function() {
+          var signFlag = null;
+          try {
+              signFlag = document.Reg_Form.signFlag.value;
+          } catch (e) {
+              console.warn("[Injected] Read error, fallback to original:", e);
+              originalDoSignCheck.apply(this, arguments);
+              return;
+          }
+
+          // If Verified ('Y'), STOP. Prevent auto-submit.
+          if (signFlag === "Y") {
+              console.log("[Injected] Verified! Stopping loop. Waiting for user click.");
+              return;
+          }
+
+          // Otherwise, keep polling
+          originalDoSignCheck.apply(this, arguments);
+      };
+
+      console.log("[Injected] Smart polling active.");
+    })();
+    `;
 
   export const ANDROID_APPSCHEME = {
     ISP: 'ispmobile',
