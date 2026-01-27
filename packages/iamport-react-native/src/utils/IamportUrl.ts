@@ -362,11 +362,14 @@ class IamportUrl {
     if (Platform.OS === 'ios' || Platform.OS === 'android') {
       try {
         if (await Linking.canOpenURL(this.url)) {
-          return await Linking.openURL(this.getAppUrl() as string);
+          return Linking.openURL(this.getAppUrl() as string);
         } else {
-          return await Linking.openURL(this.getAppUrl() as string);
+          return Linking.openURL(this.getAppUrl() as string);
         }
       } catch (e) {
+        console.error(
+          '앱을 열지 못했습니다. AndroidManifest.xml 혹은 LSApplicationQueriesSchemes에 외부 앱이 등록되었는지 확인해 주세요.'
+        );
         return await Linking.openURL(this.getMarketUrl());
       }
     }

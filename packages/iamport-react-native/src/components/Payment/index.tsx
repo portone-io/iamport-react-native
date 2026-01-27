@@ -229,14 +229,7 @@ function Payment({ userCode, tierCode, data, loading, callback }: Props) {
 
             if (iamportUrl.isAppUrl()) {
               /* 3rd-party 앱 오픈 */
-              iamportUrl.launchApp().catch((e) => {
-                const { code, message } = e;
-                callback({
-                  imp_success: false,
-                  error_code: code,
-                  error_msg: message,
-                });
-              });
+              iamportUrl.launchApp();
 
               return false;
             }
