@@ -1,5 +1,11 @@
 # iamport-react-native
 
+## 3.0.2
+
+### Patch Changes
+
+- 57366c9: 네이버페이 로그인 이슈 해결
+
 ## 3.0.1
 
 ### Patch Changes
