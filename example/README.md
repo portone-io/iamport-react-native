@@ -16,15 +16,21 @@ $ pnpm i -g expo-cli
 
 먼저 테스트할 기기에 [Expo Go](https://expo.dev/client) 앱을 설치합니다.
 
-`iamport-react-native` 레포를 clone받은 후 프로젝트의 `example` 폴더 안으로 이동합니다.
+`iamport-react-native` 레포를 clone받은 후 프로젝트의 `example` 폴더 안으로
+이동합니다.
+
 ```shell
-$ git clone https://github.com/iamport/iamport-react-native
+$ git clone https://github.com/portone-io/iamport-react-native
 $ cd iamport-react-native/example
 ```
 
 Expo 개발 서버를 실행합니다.
+
 ```shell
 $ expo start
 ```
 
-Expo Go 앱의 특성상 일부 결제수단(e.g. 뱅크페이)은 직접 빌드하는 것이 아니면 사용이 불가합니다. 정확한 테스트를 위해 [development build](https://docs.expo.dev/develop/development-builds/introduction/) 를 사용하세요.
+Expo Go 앱의 특성상 일부 결제수단(e.g. 뱅크페이)은 직접 빌드하는 것이 아니면
+사용이 불가합니다. 정확한 테스트를 위해
+[development build](https://docs.expo.dev/develop/development-builds/introduction/)
+를 사용하세요.

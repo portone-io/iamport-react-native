@@ -32,14 +32,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iamport/iamport-react-native.git"
+    "url": "git+https://github.com/portone-io/iamport-react-native.git"
   },
   "author": "Hyukgyu Kwon <me@kwon.hk>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/iamport/iamport-react-native/issues"
+    "url": "https://github.com/portone-io/iamport-react-native/issues"
   },
-  "homepage": "https://github.com/iamport/iamport-react-native#readme",
+  "homepage": "https://github.com/portone-io/iamport-react-native#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
