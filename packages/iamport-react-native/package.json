@@ -125,5 +125,8 @@
     "languages": "js",
     "type": "library",
     "version": "0.54.8"
+  },
+  "dependencies": {
+    "query-string": "^9.3.1"
   }
 }
