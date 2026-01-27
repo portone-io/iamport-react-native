@@ -229,7 +229,7 @@ function Payment({ userCode, tierCode, data, loading, callback }: Props) {
 
             if (iamportUrl.isAppUrl()) {
               /* 3rd-party 앱 오픈 */
-              iamportUrl.launchApp()
+              iamportUrl.launchApp();
 
               return false;
             }
