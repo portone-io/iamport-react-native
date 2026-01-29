@@ -11,7 +11,7 @@ class IamportUrl {
 
   constructor(url: string) {
     this.url = url;
-    this.scheme = url.split('://', 1)[0] ?? "";
+    this.scheme = url.split('://', 1)[0] ?? '';
     let splittedUrl = [this.scheme, url.slice(this.scheme.length + 3)];
     if (Platform.OS === 'ios') {
       this.path = this.scheme.startsWith('itms')
@@ -24,14 +24,14 @@ class IamportUrl {
           let host = intentUrl[0];
           let args = intentUrl[1]?.split(';') ?? [];
           if (this.scheme !== 'intent') {
-            this.scheme = this.scheme.split(':')[1] ?? "";
+            this.scheme = this.scheme.split(':')[1] ?? '';
             this.path = this.scheme + '://' + host;
           }
           args.forEach((s) => {
             if (s.startsWith('scheme')) {
               let scheme = s.split('=')[1];
               this.path = scheme + '://' + host;
-              this.scheme = scheme ?? "";
+              this.scheme = scheme ?? '';
             } else if (s.startsWith('package')) {
               this.package = s.split('=')[1];
             }
