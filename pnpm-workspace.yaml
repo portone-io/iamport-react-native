@@ -3,6 +3,8 @@ packages:
   - example
   - exampleForWebView
   - packages/iamport-react-native
+allowBuilds:
+  unrs-resolver: true
 
 # 전이 의존성을 레지스트리 외부(git/tarball URL)에서 가져오는 것 차단
 blockExoticSubdeps: true
@@ -25,6 +27,7 @@ minimumReleaseAgeExclude:
   - iamport-react-native
 
 overrides:
+  "eslint-config-prettier@<=10.1.7": ^10.1.8
   ua-parser-js: ^1.0.41
 
 strictDepBuilds: true
@@ -32,7 +35,6 @@ strictDepBuilds: true
 # 업데이트 시 신뢰 등급 하락(provenance 제거 등) 차단
 trustPolicy: no-downgrade
 trustPolicyExclude:
-  - ua-parser-js
-  - tailwindcss
-  - react-native-worklets
+  - tailwindcss@3.4.18
+  - react-native-worklets@0.6.1
 trustPolicyIgnoreAfter: 525960
