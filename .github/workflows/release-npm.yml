@@ -5,31 +5,33 @@ on:
     branches:
       - main
 
-permissions:
-  id-token: write
-  contents: write
+permissions: {}
 
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    environment: release
     permissions:
-      id-token: write
-      contents: write
-      pull-requests: write
+      id-token: write # npm provenance용 OIDC 토큰
+      contents: write # changesets가 버전 PR/태그를 생성하기 위해 필요
+      pull-requests: write # changesets가 release PR을 생성/갱신하기 위해 필요
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@903f9c1a6ebcba6cf41d87230be49611ac97822e # v6.0.2
       - name: Setup Node.js 24.x
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
         with:
           node-version: 24
           registry-url: "https://registry.npmjs.org"
-          cache: pnpm
 
       - name: Install Dependencies
         run: pnpm install
@@ -39,7 +41,7 @@ jobs:
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
-        uses: changesets/action@v1
+        uses: changesets/action@6a0a831ff30acef54f2c6aa1cbbc1096b066edaf
         with:
           publish: pnpm publish --filter=iamport-react-native
         env:
@@ -47,8 +49,11 @@ jobs:
 
       - name: Send a Slack notification if a publish happens
         if: steps.changesets.outputs.published == 'true'
+        env:
+          STEPS_CHANGESETS_OUTPUTS_PUBLISHEDPACKAGES: ${{ steps.changesets.outputs.publishedPackages }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          export VERSION=$(jq -r '.[] | select(.name == "iamport-react-native") | .version' <<< '${{ steps.changesets.outputs.publishedPackages }}')
-          curl -X POST -H 'Content-type: application/json'\
-            --data '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"NPM에 `iamport-react-native` 버전 *v'"$VERSION"'* 가 배포되었습니다 :rocket:\ncc @dx-engineers"}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"NPM 페이지 보기"},"value":"show_npm_page","url":"https://www.npmjs.com/package/iamport-react-native/v/'"$VERSION"'","action_id":"show_npm_page"},{"type":"button","text":{"type":"plain_text","text":"체인지로그 보기"},"value":"show_changelog","url":"https://github.com/iamport/iamport-react-native/blob/main/CHANGELOG.md","action_id":"show_changelog"}]}]}'\
-            ${{ secrets.SLACK_WEBHOOK_URL }}
+          VERSION=$(jq -r '.[] | select(.name == "iamport-react-native") | .version' <<< "$STEPS_CHANGESETS_OUTPUTS_PUBLISHEDPACKAGES")
+          curl -X POST -H 'Content-type: application/json' \
+            --data '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"NPM에 `iamport-react-native` 버전 *v'"$VERSION"'* 가 배포되었습니다 :rocket:\ncc @dx-engineers"}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"NPM 페이지 보기"},"value":"show_npm_page","url":"https://www.npmjs.com/package/iamport-react-native/v/'"$VERSION"'","action_id":"show_npm_page"},{"type":"button","text":{"type":"plain_text","text":"체인지로그 보기"},"value":"show_changelog","url":"https://github.com/iamport/iamport-react-native/blob/main/CHANGELOG.md","action_id":"show_changelog"}]}]}' \
+            "$SLACK_WEBHOOK_URL"
