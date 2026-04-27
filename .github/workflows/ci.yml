@@ -10,17 +10,22 @@ on:
     types:
       - checks_requested
 
+permissions: {}
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   lint:
+    name: Lint
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -32,11 +37,14 @@ jobs:
         run: pnpm run -r typecheck
 
   build-library:
+    name: Build Library
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       - name: Setup
         uses: ./.github/actions/setup
