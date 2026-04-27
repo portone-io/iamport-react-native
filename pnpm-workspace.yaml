@@ -29,6 +29,7 @@ minimumReleaseAgeExclude:
 overrides:
   "eslint-config-prettier@<=10.1.7": ^10.1.8
   ua-parser-js: ^1.0.41
+  "@babel/eslint-parser@<8.0.0": ^8.0.0-rc.3
 
 strictDepBuilds: true
 

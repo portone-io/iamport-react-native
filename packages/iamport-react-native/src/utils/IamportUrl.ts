@@ -361,7 +361,7 @@ class IamportUrl {
         } else {
           return Linking.openURL(this.getAppUrl() as string);
         }
-      } catch (e) {
+      } catch {
         console.error(
           '앱을 열지 못했습니다. AndroidManifest.xml 혹은 LSApplicationQueriesSchemes에 외부 앱이 등록되었는지 확인해 주세요.'
         );
