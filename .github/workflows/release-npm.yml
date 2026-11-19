@@ -54,7 +54,7 @@ jobs:
           jq -n --arg version "$VERSION" '
             {
               blocks: [
-                {type: "section", text: {type: "mrkdwn", text: ("npm에 `iamport-react-native` 버전 *v" + $version + "* 가 스테이징되었습니다. 메인테이너의 승인(2FA) 후 배포됩니다. :hourglass_flowing_sand:\n승인: npmjs.com 패키지 페이지의 *Staged Packages* 탭 또는 `npm stage list iamport-react-native` → `npm stage approve <stage-id>`")}},
+                {type: "section", text: {type: "mrkdwn", text: ("npm에 `iamport-react-native` 버전 *v" + $version + "* 가 스테이징되었습니다. 메인테이너의 승인(2FA) 후 배포됩니다. :hourglass_flowing_sand:\n승인: npmjs.com 패키지 페이지의 *Staged Packages* 탭 또는 `npm stage list iamport-react-native` → `npm stage approve <stage-id>`\ncc @dx-engineers")}},
                 {type: "actions", elements: [
                   {type: "button", text: {type: "plain_text", text: "npm 페이지 보기"}, url: "https://www.npmjs.com/package/iamport-react-native"},
                   {type: "button", text: {type: "plain_text", text: "체인지로그 보기"}, url: "https://github.com/iamport/iamport-react-native/blob/main/CHANGELOG.md"}
