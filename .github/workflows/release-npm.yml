@@ -37,11 +37,9 @@ jobs:
         run: pnpm install
 
       - name: Create Release Pull Request or stage to npm
-        uses: changesets/action@6a0a831ff30acef54f2c6aa1cbbc1096b066edaf # v1.7.0
+        uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         with:
-          publish: pnpm --filter iamport-react-native stage publish --recursive --access public --provenance --report-summary
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          publish-script: pnpm --filter iamport-react-native stage publish --recursive --access public --provenance --report-summary
 
       - name: Notify Slack after successful npm staging
         env:
