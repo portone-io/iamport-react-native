@@ -36,19 +36,29 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
-      - name: Create Release Pull Request or Publish to npm
-        id: changesets
+      - name: Create Release Pull Request or stage to npm
         uses: changesets/action@6a0a831ff30acef54f2c6aa1cbbc1096b066edaf
         with:
-          publish: pnpm publish --filter=iamport-react-native --provenance --access public
-
-      - name: Send a Slack notification if a publish happens
-        if: steps.changesets.outputs.published == 'true'
+          publish: bash scripts/stage-npm.sh
         env:
-          STEPS_CHANGESETS_OUTPUTS_PUBLISHEDPACKAGES: ${{ steps.changesets.outputs.publishedPackages }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_BEFORE_SHA: ${{ github.event.before }}
+
+      - name: Notify Slack after successful npm staging
+        env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          VERSION=$(jq -r '.[] | select(.name == "iamport-react-native") | .version' <<< "$STEPS_CHANGESETS_OUTPUTS_PUBLISHEDPACKAGES")
-          curl -X POST -H 'Content-type: application/json' \
-            --data '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"NPM에 `iamport-react-native` 버전 *v'"$VERSION"'* 가 배포되었습니다 :rocket:\ncc @dx-engineers"}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"NPM 페이지 보기"},"value":"show_npm_page","url":"https://www.npmjs.com/package/iamport-react-native/v/'"$VERSION"'","action_id":"show_npm_page"},{"type":"button","text":{"type":"plain_text","text":"체인지로그 보기"},"value":"show_changelog","url":"https://github.com/iamport/iamport-react-native/blob/main/CHANGELOG.md","action_id":"show_changelog"}]}]}' \
-            "$SLACK_WEBHOOK_URL"
+          RECEIPT="$RUNNER_TEMP/iamport-react-native-npm-stage.json"
+          [[ -s "$RECEIPT" ]] || exit 0
+          VERSION=$(jq -er '.version' "$RECEIPT")
+          jq -n --arg version "$VERSION" '
+            {
+              blocks: [
+                {type: "section", text: {type: "mrkdwn", text: ("npm에 `iamport-react-native` 버전 *v" + $version + "* 가 스테이징되었습니다. 메인테이너의 승인(2FA) 후 배포됩니다. :hourglass_flowing_sand:\n승인: npmjs.com 패키지 페이지의 *Staged Packages* 탭 또는 `npm stage list iamport-react-native` → `npm stage approve <stage-id>`")}},
+                {type: "actions", elements: [
+                  {type: "button", text: {type: "plain_text", text: "npm 페이지 보기"}, url: "https://www.npmjs.com/package/iamport-react-native"},
+                  {type: "button", text: {type: "plain_text", text: "체인지로그 보기"}, url: "https://github.com/iamport/iamport-react-native/blob/main/CHANGELOG.md"}
+                ]}
+              ]
+            }' |
+            curl --fail-with-body -sS -X POST -H 'Content-Type: application/json' --data-binary @- "$SLACK_WEBHOOK_URL"
