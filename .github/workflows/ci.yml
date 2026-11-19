@@ -28,7 +28,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup
-        uses: ./.github/actions/setup
+        uses: $/.github/actions/setup
 
       - name: Lint files
         run: pnpm run -r lint
@@ -47,7 +47,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup
-        uses: ./.github/actions/setup
+        uses: $/.github/actions/setup
 
       - name: Build package
         run: pnpm --filter=iamport-react-native prepare
