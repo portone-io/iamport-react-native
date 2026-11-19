@@ -10,7 +10,7 @@ allowBuilds:
 blockExoticSubdeps: true
 
 catalog:
-  "@changesets/cli": ^2.31.0
+  "@changesets/cli": ^3.0.3
   "@types/react": ^19.2.14
   "@types/react-dom": ^19.2.3
   react: ~19.2.5
