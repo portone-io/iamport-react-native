@@ -26,7 +26,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: pnpm/action-setup@903f9c1a6ebcba6cf41d87230be49611ac97822e # v6.0.3
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
       - name: Setup Node.js 24.x
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
@@ -39,18 +39,17 @@ jobs:
       - name: Create Release Pull Request or stage to npm
         uses: changesets/action@6a0a831ff30acef54f2c6aa1cbbc1096b066edaf # v1.7.0
         with:
-          publish: bash scripts/stage-npm.sh
+          publish: pnpm --filter iamport-react-native stage publish --recursive --access public --provenance --report-summary
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_BEFORE_SHA: ${{ github.event.before }}
 
       - name: Notify Slack after successful npm staging
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          RECEIPT="$RUNNER_TEMP/iamport-react-native-npm-stage.json"
-          [[ -s "$RECEIPT" ]] || exit 0
-          VERSION=$(jq -er '.version' "$RECEIPT")
+          [[ -f pnpm-publish-summary.json ]] || exit 0
+          VERSION=$(jq -r '.publishedPackages[] | select(.name == "iamport-react-native") | .version' pnpm-publish-summary.json)
+          [[ -n "$VERSION" ]] || exit 0
           jq -n --arg version "$VERSION" '
             {
               blocks: [
